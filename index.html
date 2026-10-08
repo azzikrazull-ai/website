@@ -91,7 +91,20 @@ footer{padding:60px 0 40px;color:var(--muted);font-size:13px;text-align:center}
 .chan a:first-child{background:var(--btn);color:var(--btnt)}
 .fb .row{display:flex;gap:12px;align-items:center}
 .fb .av{width:34px;height:34px;flex:none}
-@media(max-width:760px){.cf .slide{width:44%}.cf .side{margin:0 -10%}
+/* portfolio ala referensi */
+.port{grid-template-columns:320px 1fr;align-items:start;gap:20px}
+.port h2{margin:0 0 14px}
+.phonewrap{position:relative;height:500px;overflow:hidden;margin-left:-10px}
+.phonewrap .phone{position:absolute;left:14px;top:34px;width:270px;margin:0;aspect-ratio:9/19;transform:rotate(-8deg);transform-origin:top left}
+.phonewrap:after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(transparent,var(--bg))}
+.igl{position:absolute;left:34px;bottom:12px;z-index:2;font-size:36px;font-weight:800;letter-spacing:-1px}
+.stage{background:#1f1f21;padding:0;min-height:460px;border-radius:26px}
+.cf{width:100%}
+.cf .slide{aspect-ratio:2/3;font-size:20px;border-radius:18px}
+.cf .mid{width:36%;transform:scale(1.03);box-shadow:0 22px 50px rgba(0,0,0,.65)}
+.cf .side{width:30%;transform:scale(.88);opacity:.5;filter:blur(1px);margin:0 -2%}
+.cf .far{width:26%;flex:none;transform:scale(.75);opacity:.22;filter:blur(2px);margin:0 -8%}
+@media(max-width:760px){.cf .far{display:none}.phonewrap{height:400px;max-width:300px;margin:0 auto}.cf .mid{width:46%}.cf .side{width:32%;margin:0 -6%}
 nav ul{display:none}
 .hero{grid-template-columns:1fr;padding:32px 22px;text-align:center}.hero p{margin-left:auto;margin-right:auto}
 .port,.contact{grid-template-columns:1fr}
@@ -117,11 +130,11 @@ nav ul{display:none}
 <a class="pill" href="#portfolio">Lihat portfolio</a></div>
 </header>
 
-<section id="portfolio"><h2>Portfolio Design</h2>
+<section id="portfolio">
 <div class="port">
-<div class="phone" aria-hidden="true"><div class="top"><div class="av"></div><div><div class="nm">usernamekamu</div><div class="st">Instagram</div></div></div>
-<div class="grid3"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-<div><div class="tabs" role="tablist">
+<div class="phonewrap" aria-hidden="true"><div class="phone"><div class="top"><div class="av"></div><div><div class="nm">usernamekamu</div><div class="st">Instagram</div></div></div>
+<div class="grid3"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="igl">Instagram</div></div>
+<div><h2>Portfolio Design</h2><div class="tabs" role="tablist">
 <button class="tab" role="tab" aria-selected="true">Produk</button><button class="tab" role="tab" aria-selected="false">Poster</button><button class="tab" role="tab" aria-selected="false">Clothing</button><button class="tab" role="tab" aria-selected="false">Thumbnail</button><button class="tab" role="tab" aria-selected="false">Banner</button></div>
 <div class="stage"><button class="arrow" id="prev" aria-label="Sebelumnya">&#8592;</button><div class="cf" id="cf"></div><button class="arrow" id="next" aria-label="Berikutnya">&#8594;</button></div>
 <p style="color:var(--muted);font-size:13px;margin:12px 0 0" id="cap"></p></div>
@@ -153,7 +166,7 @@ Banner:['Banner Promo','Banner Toko','Banner Event']};
 var grads=['linear-gradient(160deg,#6d5bd0,#2b2160)','linear-gradient(160deg,#d0705b,#5e2418)','linear-gradient(160deg,#3f9d8f,#123a35)'];
 var tabs=document.querySelectorAll('.tab'),cf=document.getElementById('cf'),cap=document.getElementById('cap');
 var cur='Produk',i=0;
-function render(){var list=sets[cur];var n=list.length,h='';[-1,0,1].forEach(function(d){var k=(i+d+n)%n;h+='<div class="slide '+(d?'side':'mid')+'" style="background:'+grads[k%grads.length]+'">'+list[k]+'</div>';});cf.innerHTML=h;cap.textContent='Contoh '+cur.toLowerCase()+' '+(i+1)+' dari '+list.length+'. Ganti dengan karyamu.';}
+function render(){var list=sets[cur];var n=list.length,h='';[-2,-1,0,1,2].forEach(function(d){var k=((i+d)%n+n)%n;h+='<div class="slide '+(d?(Math.abs(d)==1?'side':'far'):'mid')+'" style="background:'+grads[k%grads.length]+'">'+list[k]+'</div>';});cf.innerHTML=h;cap.textContent='Contoh '+cur.toLowerCase()+' '+(i+1)+' dari '+list.length+'. Ganti dengan karyamu.';}
 tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.setAttribute('aria-selected','false')});t.setAttribute('aria-selected','true');cur=t.textContent;i=0;render();});});
 document.getElementById('next').addEventListener('click',function(){i=(i+1)%sets[cur].length;render();});
 document.getElementById('prev').addEventListener('click',function(){i=(i-1+sets[cur].length)%sets[cur].length;render();});
